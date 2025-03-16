@@ -1,0 +1,26 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/library_db
+    username: root
+    password: user
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  thymeleaf:
+    cache: false
+  mvc:
+    throw-exception-if-no-handler-found: true
+  web:
+    resources:
+      add-mappings: false
+server:
+  port: 8080
+  error:
+    include-stacktrace: always
+logging:
+  level:
+    root: INFO
+    com.example.librarymanagement: DEBUG
+  file:
+    name: logs/spring-boot-application.log
