@@ -16,7 +16,7 @@ public class BookService {
         this.bookRepository = bookRepository;
     }
 
-    public List<Book> getAllBooks() {
+    public List<Book> findAllBooks() {
         try {
             List<Book> books = bookRepository.findAll();
             logger.info("Books fetched from database: " + books.size());
@@ -31,7 +31,7 @@ public class BookService {
         bookRepository.save(book);
     }
 
-    public Book getBookById(Long id) {
+    public Book findBookById(Long id) {
         return bookRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid book Id:" + id));
     }
 

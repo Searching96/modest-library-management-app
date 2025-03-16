@@ -26,7 +26,7 @@ public class BookController {
     @GetMapping("/books")
     public String getAllBooks(Model model) {
         logger.info("Fetching all books");
-        List<Book> books = bookService.getAllBooks();
+        List<Book> books = bookService.findAllBooks();
         model.addAttribute("books", books);
         logger.info("Books fetched: " + books.size());
         return "book-list"; // Points to book-list.html
@@ -47,7 +47,7 @@ public class BookController {
     @GetMapping("/books/edit/{id}")
     public String showEditBookForm(@PathVariable("id") Long id, Model model) {
         logger.info("Received request for editing book with id: " + id);
-        Book book = bookService.getBookById(id);
+        Book book = bookService.findBookById(id);
         model.addAttribute("book", book);
         return "edit-book"; // Points to edit-book.html
     }
