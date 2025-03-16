@@ -1,7 +1,7 @@
 package com.example.librarymanagement.service;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+// import org.slf4j.Logger;
+// import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import com.example.librarymanagement.model.Book;
 import com.example.librarymanagement.repository.BookRepository;
@@ -10,7 +10,7 @@ import java.util.List;
 
 @Service
 public class BookService {
-    private static final Logger logger = LoggerFactory.getLogger(BookService.class);
+    // private static final Logger logger = LoggerFactory.getLogger(BookService.class);
     private final BookRepository bookRepository;
 
     public BookService(BookRepository bookRepository) {
