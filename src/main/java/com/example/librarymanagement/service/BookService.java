@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import com.example.librarymanagement.model.Book;
 import com.example.librarymanagement.repository.BookRepository;
+
 import java.util.List;
 
 @Service
@@ -17,14 +18,16 @@ public class BookService {
     }
 
     public List<Book> findAllBooks() {
-        try {
-            List<Book> books = bookRepository.findAll();
-            logger.info("Books fetched from database: " + books.size());
-            return books;
-        } catch (Exception e) {
-            logger.error("Error fetching books from database", e);
-            throw e;
-        }
+        // try {
+        //     List<Book> books = bookRepository.findAll();
+        //     logger.info("Books fetched from database: " + books.size());
+        //     return books;
+        // } catch (Exception e) {
+        //     logger.error("Error fetching books from database", e);
+        //     throw e;
+        // }
+        List<Book> books = bookRepository.findAll();
+        return books;
     }
 
     public void saveBook(Book book) {
