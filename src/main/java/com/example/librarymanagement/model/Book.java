@@ -1,9 +1,13 @@
 package com.example.librarymanagement.model;
 
+import java.util.List;
+
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "books")
+@Table(name = "books", uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"isbn"})
+})
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -11,11 +15,13 @@ public class Book {
     private String title;
     private String isbn;
     private int publicationYear;
-    private String genre;
 
     @ManyToOne
     @JoinColumn(name = "author_id", nullable = false)
     private Author author;
+
+    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
+    private List<BookGenre> bookGenres;
 
     // Constructors, getters, setters
     public Book() {
@@ -26,7 +32,6 @@ public class Book {
         this.author = author;
         this.isbn = isbn;
         this.publicationYear = publicationYear;
-        this.genre = genre;
     }
 
     public Long getId() {

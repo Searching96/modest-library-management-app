@@ -41,11 +41,12 @@ CREATE TABLE IF NOT EXISTS books
 
 CREATE TABLE IF NOT EXISTS books_genres
 (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     book_id INT NOT NULL,
     genre_id INT NOT NULL,
-    PRIMARY KEY (book_id, genre_id),
     CONSTRAINT fk_books_genres_book FOREIGN KEY (book_id) REFERENCES books(id) ON DELETE CASCADE,
-    CONSTRAINT fk_books_genres_genre FOREIGN KEY (genre_id) REFERENCES genres(id) ON DELETE CASCADE
+    CONSTRAINT fk_books_genres_genre FOREIGN KEY (genre_id) REFERENCES genres(id) ON DELETE CASCADE,
+    UNIQUE (book_id, genre_id)
 );
 
 INSERT INTO authors (author_name, birth_year) VALUES
@@ -89,8 +90,7 @@ INSERT INTO books_genres (book_id, genre_id) VALUES
 (5, 2);
 
 SELECT * FROM books;
-
 SELECT * FROM authors;
-
+SELECT * FROM books_genres;
 # SHOW CREATE TABLE books;
 
