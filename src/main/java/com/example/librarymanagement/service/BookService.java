@@ -5,8 +5,11 @@ package com.example.librarymanagement.service;
 import org.springframework.stereotype.Service;
 import com.example.librarymanagement.model.Book;
 import com.example.librarymanagement.model.BookGenre;
+import com.example.librarymanagement.model.Genre;
 import com.example.librarymanagement.repository.BookRepository;
+import com.example.librarymanagement.repository.GenreRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -14,9 +17,11 @@ import java.util.stream.Collectors;
 public class BookService {
     // private static final Logger logger = LoggerFactory.getLogger(BookService.class);
     private final BookRepository bookRepository;
+    private final GenreRepository genreRepository;
 
-    public BookService(BookRepository bookRepository) {
+    public BookService(BookRepository bookRepository, GenreRepository genreRepository) {
         this.bookRepository = bookRepository;
+        this.genreRepository = genreRepository;
     }
 
     public List<Book> findAllBooks() {
@@ -33,6 +38,23 @@ public class BookService {
     }
 
     public void saveBook(Book book) {
+        List<BookGenre> newBookGenres = new ArrayList<>();
+
+        if (book.getGenre() != null && !book.getGenre().isEmpty()) {
+            String[] genreNames = book.getGenre().split(",");
+            for (String rawName : genreNames) {
+                String name = rawName.trim();
+                Genre found = genreRepository.findByGenreName(name);
+                if (found == null) {
+                    found = new Genre(name);
+                    genreRepository.save(found);
+                }
+                BookGenre bg = new BookGenre(book, found);
+                newBookGenres.add(bg);
+            }
+        }
+
+        book.setBookGenres(newBookGenres);
         bookRepository.save(book);
     }
 

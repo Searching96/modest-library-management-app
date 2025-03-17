@@ -23,6 +23,9 @@ public class Book {
     @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<BookGenre> bookGenres;
 
+    @Transient
+    private String genre;
+
     // Constructors, getters, setters
     public Book() {
     }
@@ -80,5 +83,13 @@ public class Book {
 
     public void setBookGenres(List<BookGenre> bookGenres) {
         this.bookGenres = bookGenres;
+    }
+
+    public String getGenre() {
+        return genre;
+    }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
     }
 }
