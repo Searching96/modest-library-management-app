@@ -27,7 +27,7 @@ public class AuthorService {
     }
 
     public void deleteAuthor(Long id) {
-        Author author = authorRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid author Id:" + id));
+        Author author = findAuthorById(id);
         authorRepository.delete(author);
     }
 }

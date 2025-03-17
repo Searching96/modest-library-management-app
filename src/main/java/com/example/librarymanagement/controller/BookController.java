@@ -6,9 +6,8 @@ import com.example.librarymanagement.service.AuthorService;
 import com.example.librarymanagement.service.BookService;
 
 import java.util.List;
+import java.util.ArrayList;
 
-// import org.slf4j.Logger;
-// import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,7 +17,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class BookController {
-    // private static final Logger logger = LoggerFactory.getLogger(BookController.class);
     private final BookService bookService;
     private final AuthorService authorService;
 
@@ -29,11 +27,22 @@ public class BookController {
 
     @GetMapping("/books")
     public String listBooks(Model model) {
-        // logger.info("Fetching all books");
-        List<Book> books = bookService.findAllBooks();
-        model.addAttribute("books", books);
-        // logger.info("Books fetched: " + books.size());
-        return "book-list"; // Points to book-list.html
+        try {
+            List<Book> books = bookService.findAllBooks();
+            List<String> formattedGenresList = new ArrayList<>();
+            
+            for (Book book : books) {
+                String genres = bookService.getFormattedGenres(book);
+                formattedGenresList.add(genres);
+            }
+            
+            model.addAttribute("books", books);
+            model.addAttribute("formattedGenresList", formattedGenresList);
+            return "book-list";
+        } catch (Exception e) {
+            // Log the error or handle it appropriately
+            return "error";
+        }
     }
 
     @GetMapping("/books/new")
@@ -41,7 +50,7 @@ public class BookController {
         List<Author> authors = authorService.findAllAuthors();
         model.addAttribute("book", new Book());
         model.addAttribute("authors", authors);
-        return "add-book"; // Points to add-book.html
+        return "add-book";
     }
 
     @PostMapping("/books")
@@ -52,12 +61,11 @@ public class BookController {
 
     @GetMapping("/books/edit/{id}")
     public String showEditBookForm(@PathVariable("id") Long id, Model model) {
-        // logger.info("Received request for editing book with id: " + id);
         Book book = bookService.findBookById(id);
         List<Author> authors = authorService.findAllAuthors();
         model.addAttribute("book", book);
         model.addAttribute("authors", authors);
-        return "edit-book"; // Points to edit-book.html
+        return "edit-book";
     }
 
     @PostMapping("/books/{id}")

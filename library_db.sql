@@ -92,5 +92,7 @@ INSERT INTO books_genres (book_id, genre_id) VALUES
 SELECT * FROM books;
 SELECT * FROM authors;
 SELECT * FROM books_genres;
-# SHOW CREATE TABLE books;
-
+SHOW CREATE TABLE books;
+SHOW CREATE TABLE authors;
+SHOW CREATE TABLE genres;
+SHOW CREATE TABLE books_genres;

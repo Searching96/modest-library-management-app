@@ -20,14 +20,14 @@ public class Book {
     @JoinColumn(name = "author_id", nullable = false)
     private Author author;
 
-    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<BookGenre> bookGenres;
 
     // Constructors, getters, setters
     public Book() {
     }
 
-    public Book(String title, Author author, String isbn, int publicationYear, String genre) {
+    public Book(String title, Author author, String isbn, int publicationYear) {
         this.title = title;
         this.author = author;
         this.isbn = isbn;
@@ -74,11 +74,11 @@ public class Book {
         this.publicationYear = publicationYear;
     }
 
-    public String getGenre() {
-        return genre;
+    public List<BookGenre> getBookGenres() {
+        return bookGenres;
     }
 
-    public void setGenre(String genre) {
-        this.genre = genre;
+    public void setBookGenres(List<BookGenre> bookGenres) {
+        this.bookGenres = bookGenres;
     }
 }

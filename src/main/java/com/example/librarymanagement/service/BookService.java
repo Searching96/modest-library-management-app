@@ -4,9 +4,11 @@ package com.example.librarymanagement.service;
 // import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import com.example.librarymanagement.model.Book;
+import com.example.librarymanagement.model.BookGenre;
 import com.example.librarymanagement.repository.BookRepository;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class BookService {
@@ -44,12 +46,20 @@ public class BookService {
         book.setAuthor(updatedBook.getAuthor());
         book.setIsbn(updatedBook.getIsbn());
         book.setPublicationYear(updatedBook.getPublicationYear());
-        book.setGenre(updatedBook.getGenre());
+        book.setBookGenres(updatedBook.getBookGenres());
+        //book.setGenre(updatedBook.getGenre());
         bookRepository.save(book);
     }
 
     public void deleteBook(Long id) {
-        Book book = bookRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid book Id:" + id));
+        Book book = findBookById(id);
         bookRepository.delete(book);
+    }
+
+    public String getFormattedGenres(Book book) {
+        return book.getBookGenres().stream()
+            .map(BookGenre::getGenre)
+            .map(genre -> genre.getGenreName())
+            .collect(Collectors.joining(", "));
     }
 }

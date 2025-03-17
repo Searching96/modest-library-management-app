@@ -1,4 +1,4 @@
-<!DOCTYPE hmtl>
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
     <head>
         <meta charset="UTF-8">
@@ -16,16 +16,17 @@
                     <th>Author</th>
                     <th>ISBN</th>
                     <th>Published Year</th>
-                    <th>Genre</th>
+                    <th>Genres</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="book : ${books}">
+                <tr th:each="book, iterStat : ${books}">
                     <td th:text="${book.title}"></td>
                     <td th:text="${book.author.authorName}"></td>
                     <td th:text="${book.isbn}"></td>
                     <td th:text="${book.publicationYear}"></td>
-                    <td th:text="#{strings.join(book.bookGenres.![genre.genreName], ', ')}"></td>
+                    <td th:text="${formattedGenresList[iterStat.index]}"></td>
                     <td>
                         <a th:href="@{/books/edit/{id}(id=${book.id})}">
                             <button type="button">Edit</button>
@@ -35,6 +36,7 @@
                         </a>
                     </td>
                 </tr>
+            </tbody>
         </table>
     </body>
 </html>
